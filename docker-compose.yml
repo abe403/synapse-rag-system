@@ -1,0 +1,36 @@
+
+
+services:
+  synapse-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - synapse-api
+
+  synapse-api:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      - synapse-retrieval
+
+  synapse-retrieval:
+    build:
+      context: ./retrieval-engine
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # If exposing HTTP/SSE for MCP
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
