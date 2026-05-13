@@ -1,0 +1,25 @@
+# Docker
+.dockerignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv
+venv/
+ENV/
+.env
+
+# Node / React
+node_modules/
+dist/
+build/
+.DS_Store
+
+# Local database / data
+*.db
+*.faiss
+*.index
+
+# Logs
+*.log
